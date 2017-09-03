@@ -29,7 +29,7 @@ find_package(catkin REQUIRED COMPONENTS
   ${FAST_PCL_PACKAGES}
   ndt_tku
 )
-elseif("${ROS_VERSION}" MATCHES "(kinetic)")
+elseif("${ROS_VERSION}" MATCHES "(kinetic|lunar)")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   pcl_ros
@@ -59,7 +59,7 @@ catkin_package(
   DEPENDS ndt_tku
 #  DEPENDS system_lib
 )
-elseif("${ROS_VERSION}" MATCHES "(kinetic)")
+elseif("${ROS_VERSION}" MATCHES "(kinetic|lunar)")
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ndt_pcl

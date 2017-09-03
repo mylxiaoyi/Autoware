@@ -23,7 +23,7 @@ FIND_PACKAGE(catkin REQUIRED COMPONENTS
   runtime_manager
   calibration_camera_lidar
 )
-elseif ("${ROS_VERSION}" MATCHES "(kinetic)")
+elseif ("${ROS_VERSION}" MATCHES "(kinetic|lunar)")
 FIND_PACKAGE(catkin REQUIRED COMPONENTS
   std_msgs
   cv_bridge
@@ -54,7 +54,7 @@ catkin_package(
   CATKIN_DEPENDS libdpm_ocv 
   libdpm_ttic scan2image fusion kf runtime_manager calibration_camera_lidar std_msgs geometry_msgs
 )
-elseif ("${ROS_VERSION}" MATCHES "(kinetic)")
+elseif ("${ROS_VERSION}" MATCHES "(kinetic|lunar)")
 catkin_package(
   CATKIN_DEPENDS libdpm_ttic scan2image fusion runtime_manager calibration_camera_lidar std_msgs geometry_msgs
 )

@@ -1223,7 +1223,7 @@ FLOAT *dpm_ttic_gpu_get_boxes(FLOAT **features,FLOAT *scales,int *feature_size, 
 		}
 	}
 
-	FLOAT abs_threshold = abs(thresh);
+	FLOAT abs_threshold = std::abs(thresh);
 
 	/* accumulated score calculation */
 	FLOAT max_score = 0.0;

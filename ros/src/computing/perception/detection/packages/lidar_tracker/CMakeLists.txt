@@ -187,6 +187,7 @@ if(EXISTS "/usr/local/cuda")
   endif()
 
   set(CUDA_COMPILER "/usr/local/cuda/bin/nvcc")
+  set(CUDA_HOST_COMPILER "/usr/bin/gcc-5")
 
   if("${ARCHITECTURE}" MATCHES "^arm")
     set(CUDA_LDFLAGS -L/usr/lib/arm-linux-gnueabihf/tegra -lcuda)
@@ -249,7 +250,7 @@ if(EXISTS "/usr/local/cuda")
   FIND_PACKAGE(CUDA REQUIRED)
   INCLUDE(FindCUDA)
 
-  if ("${ROS_VERSION}" MATCHES "(kinetic)")
+  if ("${ROS_VERSION}" MATCHES "(kinetic|lunar)")
     set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS};-arch=${CUDA_ARCH})
   else()
     set(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS};-arch=${CUDA_ARCH};-std=c++11)

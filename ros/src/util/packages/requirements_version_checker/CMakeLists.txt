@@ -6,10 +6,10 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-if (NOT "${ROS_VERSION}" MATCHES "(indigo|jade|kinetic)")
+if (NOT "${ROS_VERSION}" MATCHES "(indigo|jade|kinetic|lunar)")
 message(
   FATAL_ERROR
-  "You must need ROS indigo or jade or kinetic(Your ROS version is '${ROS_VERSION}')"
+  "You must need ROS indigo or jade or kinetic or lunar(Your ROS version is '${ROS_VERSION}')"
 )
 endif()
 

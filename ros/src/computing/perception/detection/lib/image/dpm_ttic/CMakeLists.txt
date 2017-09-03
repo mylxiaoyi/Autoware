@@ -41,6 +41,12 @@ FILE(GLOB DPM_TTIC_COMMON_IMPL_SOURCES "common/*.cpp")
 FILE(GLOB DPM_TTIC_CPU_IMPL_SOURCES "cpu/*.cpp")
 FILE(GLOB DPM_TTIC_GPU_IMPL_SOURCES "gpu/*.cpp")
 
+SET(CUDA_COMPILER "${CUDA_TOOLKIT_ROOT_DIR}/bin/nvcc")
+set(CUDA_HOST_COMPILER "/usr/bin/gcc-5")
+set(CUDA_NVCC_FLAGS
+    "-std=c++11 -O3 -gencode arch=compute_61,code=sm_61"  # gtx 980 Ti / 1080
+    )
+
 ## Declare a cpp library
 ADD_LIBRARY(libdpm_ttic
   ${DPM_TTIC_COMMON_IMPL_SOURCES}
@@ -55,7 +61,6 @@ TARGET_LINK_LIBRARIES(libdpm_ttic
   cuda
 )
 
-SET(CUDA_COMPILER "${CUDA_TOOLKIT_ROOT_DIR}/bin/nvcc")
 
 IF("${ARCHITECTURE}" MATCHES "^arm")
 SET(CUDA_LDFLAGS -L/usr/lib/arm-linux-gnueabihf/tegra -lcuda)
@@ -69,7 +74,7 @@ SET(CUDA_CAPABILITY_VERSION_CHECKER
 
 EXECUTE_PROCESS(
   COMMAND
-  ${CUDA_COMPILER}
+  "${CUDA_COMPILER} -ccbin=/usr/bin/gcc-5"
   -o ${CUDA_CAPABILITY_VERSION_CHECKER}
   "${CMAKE_CURRENT_SOURCE_DIR}/util/capability_version_checker.cpp"
   ${CUDA_LDFLAGS}
