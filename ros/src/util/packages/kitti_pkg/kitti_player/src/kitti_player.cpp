@@ -32,6 +32,7 @@
 #include <boost/progress.hpp>
 #include <boost/tokenizer.hpp>
 #include <boost/tokenizer.hpp>
+#include <boost/format.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
 #include <opencv2/core/core.hpp>

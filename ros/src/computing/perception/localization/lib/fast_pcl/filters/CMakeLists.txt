@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(filters)
 
 find_package(catkin REQUIRED COMPONENTS)
-find_package(PCL REQUIRED)
+find_package(PCL REQUIRED COMPONENTS common)
 
 IF(PCL_VERSION VERSION_LESS "1.7.2")
 message("fast_pcl requires PCL 1.7.2 or higher versions")

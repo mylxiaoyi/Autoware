@@ -46,3 +46,5 @@ ENV/
 *.bag
 *.csv
 
+ros/backup
+ros/3rdparty

@@ -43,7 +43,7 @@ execute_process(
   OUTPUT_STRIP_TRAILING_WHITESPACE
   )
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -O2 -Wall ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=c++11 -O2 -Wall ${CMAKE_CXX_FLAGS} -fext-numeric-literals")
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
@@ -141,7 +141,6 @@ if(EXISTS "/usr/local/cuda")
   endif()
 
   set(CUDA_COMPILER "/usr/local/cuda/bin/nvcc")
-  set(CUDA_HOST_COMPILER "/usr/bin/gcc-5")
 
   if("${ARCHITECTURE}" MATCHES "^arm")
     set(CUDA_LDFLAGS -L/usr/lib/arm-linux-gnueabihf/tegra -lcuda)

@@ -14,6 +14,8 @@
 #include <state.hpp>
 #include <state_context.hpp>
 
+#include <numeric>
+
 namespace decision_maker
 {
 double DecisionMakerNode::getPoseAngle(const geometry_msgs::Pose &pose)
