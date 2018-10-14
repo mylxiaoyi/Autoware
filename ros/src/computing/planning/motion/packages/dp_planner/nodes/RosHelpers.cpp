@@ -12,8 +12,8 @@
 #include <fstream>
 #include <math.h>
 #include "PolygonGenerator.h"
-#include "MappingHelpers.h"
-#include "MatrixOperations.h"
+#include "op_planner/MappingHelpers.h"
+#include "op_planner/MatrixOperations.h"
 
 
 namespace PlannerXNS
@@ -841,10 +841,13 @@ void RosHelpers::UpdateRoadMap(const AutowareRoadNetwork& src_map, PlannerHNS::R
 	std::vector<UtilityHNS::AisanVectorFileReader::AisanVector> vector_data;
 	std::vector<UtilityHNS::AisanCurbFileReader::AisanCurb> curb_data;
 	std::vector<UtilityHNS::AisanRoadEdgeFileReader::AisanRoadEdge> roadedge_data;
+	std::vector<UtilityHNS::AisanWayareaFileReader::AisanWayarea> way_area;
+	std::vector<UtilityHNS::AisanCrossWalkFileReader::AisanCrossWalk> crossing;
+	std::vector<UtilityHNS::AisanNodesFileReader::AisanNode > nodes_data;
 	std::vector<UtilityHNS::AisanDataConnFileReader::DataConn> conn_data;
 
 	PlannerHNS::GPSPoint origin;//(m_OriginPos.position.x, m_OriginPos.position.y, m_OriginPos.position.z, 0);
-	PlannerHNS::MappingHelpers::ConstructRoadNetworkFromRosMessage(lanes, points, dts, inters, areas, line_data, stop_line_data, signal_data, vector_data,curb_data, roadedge_data, conn_data, origin, out_map);
+	PlannerHNS::MappingHelpers::ConstructRoadNetworkFromRosMessage(lanes, points, dts, inters, areas, line_data, stop_line_data, signal_data, vector_data,curb_data, roadedge_data, way_area, crossing, nodes_data, conn_data, origin, out_map);
 }
 
 }

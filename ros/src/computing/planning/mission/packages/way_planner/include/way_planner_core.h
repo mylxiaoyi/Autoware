@@ -33,11 +33,6 @@
 
 #include <ros/ros.h>
 
-//#include <map_file/PointClassArray.h>
-//#include <map_file/LaneArray.h>
-//#include <map_file/NodeArray.h>
-//#include <map_file/StopLineArray.h>
-//#include <map_file/DTLaneArray.h>
 #include "vector_map_msgs/PointArray.h"
 #include "vector_map_msgs/LaneArray.h"
 #include "vector_map_msgs/NodeArray.h"
@@ -63,8 +58,9 @@
 #include "autoware_msgs/CanInfo.h"
 #include <visualization_msgs/MarkerArray.h>
 
-#include "MappingHelpers.h"
-#include "PlannerH.h"
+#include "op_planner/MappingHelpers.h"
+#include "op_planner/PlanningHelpers.h"
+#include "op_planner/PlannerH.h"
 #include "RosHelpers.h"
 #include "SocketServer.h"
 

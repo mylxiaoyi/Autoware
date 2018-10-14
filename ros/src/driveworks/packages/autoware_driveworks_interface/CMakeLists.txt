@@ -1,76 +1,89 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(autoware_driveworks_interface)
 
-EXECUTE_PROCESS(
-  COMMAND uname -m
-  OUTPUT_VARIABLE ARCH
-  OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+set(CMAKE_CXX_FLAGS "-O2 -s  -Wno-error=unused-parameter")
 
-if("${ARCH}" STREQUAL "aarch64")
-
-
-include(FindPkgConfig)
-find_package(CUDA REQUIRED)
-find_package(Threads REQUIRED)
-find_package(OpenCV REQUIRED)
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  cv_bridge
-  std_msgs
-  sensor_msgs
-  autoware_msgs
-  tf
-)
+        autoware_build_flags
+        roscpp
+        std_msgs sensor_msgs autoware_msgs
+        )
 
+find_package(CUDA)
 
 catkin_package(
-  CATKIN_DEPENDS std_msgs sensor_msgs autoware_msgs
+        CATKIN_DEPENDS std_msgs sensor_msgs autoware_msgs
 )
 
-set(CMAKE_CXX_FLAGS "-O2 -s  -std=c++11 -Wno-error=unused-parameter")
+if ("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "aarch64" AND CUDA_FOUND)
+    find_package(Threads REQUIRED)
+    find_package(OpenCV REQUIRED)
 
-include_directories(
-	include
-	${catkin_INCLUDE_DIRS}
-	${Boost_INCLUDE_DIRS}
-	${OpenCV_INCLUDE_DIRS}
-)
+    find_package(catkin REQUIRED COMPONENTS
+            roscpp
+            cv_bridge
+            std_msgs
+            sensor_msgs
+            autoware_msgs
+            tf
+            )
 
-link_directories(
-	${catkin_LIBRARY_DIRS}
-	${PCL_LIBRARY_DIRS}
-	${OpenCV_LIBRARY_DIRS}
-	/usr/lib/
-	lib
-	/usr/local/driveworks/lib/
-)
+    include_directories(
+            include
+            ${catkin_INCLUDE_DIRS}
+            ${Boost_INCLUDE_DIRS}
+            ${OpenCV_INCLUDE_DIRS}
+    )
 
-add_executable(gmsl_interface
- 	nodes/gmsl_interface/gmsl_interface_node.cpp
-)
+    link_directories(
+            ${catkin_LIBRARY_DIRS}
+            ${PCL_LIBRARY_DIRS}
+            ${OpenCV_LIBRARY_DIRS}
+            /usr/lib/
+            lib
+            /usr/local/driveworks/lib/
+            ${DRIVEWORKS_TOOLKIT_TARGET_DIR}/lib
+            ${CUDA_TOOLKIT_TARGET_DIR}/lib
+            ${CUDA_TOOLKIT_TARGET_DIR}/lib/stubs
+            ${NVIDIA_DRIVE_SDK_TARGET_DIR}/usr/lib
+            ${NVIDIA_TENSORRT_TARGET_DIR}/lib
+    )
 
-add_dependencies(gmsl_interface
-	${catkin_EXPORTED_TARGETS}
-)
+    add_executable(gmsl_interface
+            nodes/gmsl_interface/gmsl_interface_node.cpp
+            )
 
-target_link_libraries(gmsl_interface
-	${catkin_LIBRARIES}
-	-lautoware_driveworks
-)
+    add_dependencies(gmsl_interface
+            ${catkin_EXPORTED_TARGETS}
+            )
 
-add_executable(tensorrt_interface
-	nodes/tensorrt_interface/tensorrt_interface_node.cpp
-)
+    target_link_libraries(gmsl_interface
+            ${catkin_LIBRARIES}
+            autoware_driveworks
+            driveworks
+            cudart
+            cuda
+            )
 
-add_dependencies(tensorrt_interface
-	${catkin_EXPORTED_TARGETS}
-)
+    add_executable(tensorrt_interface
+            nodes/tensorrt_interface/tensorrt_interface_node.cpp
+            )
 
-target_link_libraries(tensorrt_interface 
-		${catkin_LIBRARIES}
-	-lautoware_driveworks
-)
+    add_dependencies(tensorrt_interface
+            ${catkin_EXPORTED_TARGETS}
+            )
 
-endif()
+    target_link_libraries(tensorrt_interface
+            ${catkin_LIBRARIES}
+            autoware_driveworks
+            driveworks
+            cudart
+            cuda
+            )
+     # Use configure_file instead of file(COPY ...) so that if the input file
+     # changes, it gets copied to the DEVEL space anyway
+     configure_file(lib/libautoware_driveworks.so ${CATKIN_DEVEL_PREFIX}/lib/libautoware_driveworks.so COPYONLY)
+ELSE()
+    message("autoware_driveworks_interface won't be built, CUDA and aarch64 are required.")
+ENDIF ()

@@ -2,6 +2,14 @@
 Changelog for package graph_tools
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.8.0 (2018-08-31)
+------------------
+
+1.7.0 (2018-05-18)
+------------------
+* update Version from 1.6.3 to 1.7.0 in package.xml and CHANGELOG.rst
+* Contributors: Kosuke Murakami
+
 1.6.3 (2018-03-06)
 ------------------
 
